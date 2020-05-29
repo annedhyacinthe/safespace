@@ -31,12 +31,12 @@ const validateInputs = (username, email, password) => {
  */
 const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, sprite, seed } = req.body;
     if (validateInputs(username, email, password) === false)
       throw Error("Invalid Credentials.");
     const saltRounds = 7;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    User.add(username, email, hashedPassword);
+    User.add(username, email, hashedPassword, sprite, seed);
     const token = jwt.sign({ username: username }, process.env.AUTH_KEY);
     res.cookie("safeToken", token).sendStatus(200);
   } catch (err) {

@@ -22,7 +22,8 @@ function Register() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        avatar: [sprite, seed],
+        seed,
+        sprite,
         username: username,
         email: email,
         password: password,
