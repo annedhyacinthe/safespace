@@ -34,7 +34,7 @@ class Post {
   }
 
   static getSomeByCommunity (communityId) {
-    const queryText = 'SELECT * FROM posts WHERE community_id = $1 LIMIT 2 ORDER BY id DESC;'
+    const queryText = 'SELECT * FROM posts WHERE community_id = $1 LIMIT 2 ;'
     return db.query(queryText, [communityId]).then(response => response.rows)
   }
 }

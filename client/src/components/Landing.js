@@ -49,7 +49,7 @@ const Landing = () => {
           <Card.Body>
             <Card.Title>Create Your Own Community</Card.Title>
             <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+              Create a space for yourself and others to gather around a shared experiences and provide support and motivation for one another.
             </Card.Text>
             <LinkContainer to='/spaces'>
               <Button variant='primary'>Browse Communities</Button>
@@ -62,7 +62,7 @@ const Landing = () => {
           <Card.Body>
             <Card.Title>Find Mentorship</Card.Title>
             <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Communicate with others and learn better ways to to cope from people who have dealt with and have overcamed the same experiences as you. 
             </Card.Text>
             <Button variant='primary'>Find a Mentor</Button>
           </Card.Body>
@@ -73,7 +73,7 @@ const Landing = () => {
           <Card.Body>
             <Card.Title>Tell Your Story</Card.Title>
             <Card.Text>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Have a space to tell your story and to be heard.  
             </Card.Text>
             <Button variant='primary'>Tell Your Story</Button>
           </Card.Body>

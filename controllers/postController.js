@@ -70,7 +70,7 @@ const getAllByCommunity = (req, res) => {
 
 const getSomeByCommunity = (req, res) => {
   const { id } = req.params
-
+  console.log(id)
   Post.getSomeByCommunity(id)
     .then(data => {
       return res.json(data)

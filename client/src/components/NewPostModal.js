@@ -1,9 +1,9 @@
 import React, { useState, createRef } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { Button } from 'semantic-ui-react'
+// import { Button } from 'semantic-ui-react'
 import { colorPallet } from './Theme'
 import WritePostForm from './WritePostForm'
-import { Navbar } from 'react-bootstrap'
+import { Navbar, Nav, Button } from 'react-bootstrap'
 
 function NewPostModal (props) {
   const [show, setShow] = useState(false)
@@ -14,7 +14,8 @@ function NewPostModal (props) {
     // <>
     <div>
       <Navbar fixed='bottom'>
-        <Button size='medium' style={{ color: colorPallet.marvel }} circular icon='add' onClick={handleShow} />
+        <Nav className="mr-auto">
+        <Button size='medium' onClick={handleShow}>Post</Button>
 
         <Modal show={show} onHide={handleClose} animation={false}>
           <Modal.Header closeButton>New Post</Modal.Header>
@@ -22,6 +23,10 @@ function NewPostModal (props) {
             <WritePostForm setShow={setShow} setNewPost={props.setNewPost} id={props.id} />
           </Modal.Body>
         </Modal>
+        </Nav>
+        <Nav className="justify-content-end">
+        <Button variant="danger" >Leave </Button>
+        </Nav>
       </Navbar>
     </div>
 

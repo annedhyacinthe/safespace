@@ -7,7 +7,7 @@ exports.up = function (knex) {
     t.integer('user_id').notNullable()
     t.foreign('user_id').references('id').inTable('users')
     t.integer('post_id').notNullable()
-    t.foreign('post_id').references('id').inTable('posts')
+    t.foreign('post_id').references('id').inTable('posts').onDelete('cascade')
   })
 }
 

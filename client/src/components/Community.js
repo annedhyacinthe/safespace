@@ -20,6 +20,7 @@ const Community = () => {
       } else {
         const req = await fetch(`/posts-community/visiter/${id}`)
         const response = await req.json()
+        console.log(response)
         setPosts(response)
       }
     }
@@ -44,7 +45,7 @@ const Community = () => {
       <Tabs defaultActiveKey='newsfeed' transition={false} id='noanim-tab-example'>
         <Tab eventKey='newsfeed' title='Newsfeed'>
           <Item.Group>
-            <NewPostModal setNewPost={setNewPost} id={id} />
+            {type === 'member' && <NewPostModal setNewPost={setNewPost} id={id} />}
             {posts.map((res, i) => {
               return (
                 <Post key={i} data={res} />

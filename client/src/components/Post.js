@@ -17,6 +17,7 @@ function Post (props) {
   const [isLiked, setIsLiked] = useState(false)
   const dateCreated = new Date(props.data.created_at)
   const [userComment, setUserComment] = useState()
+  const [submitted,setSubmitted] = useState(false)
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const [show, setShow] = useState(false)
   useEffect(() => {
@@ -90,11 +91,11 @@ function Post (props) {
   }
 
   function handleCommentChange (e) {
-    const currentComment = e.target.value
-    setUserComment(currentComment)
+    setUserComment(e.target.value)
   }
 
   const createComment = async () => {
+    
     const postId = props.data.id
     const content = userComment
     const postComment = {
@@ -106,6 +107,7 @@ function Post (props) {
     }
     const req = await fetch('/comments', postComment)
     const res = await req
+    setSubmitted(true)
   }
   return (
 
@@ -152,7 +154,7 @@ function Post (props) {
         {isCommentsShowing && <CommentList data={comments} />}
 
         <Form>
-          <Form.TextArea width={12} onChange={handleCommentChange} />
+          <Form.TextArea width={12} onChange={handleCommentChange} />  
           <Form.Button content='Add Reply' labelPosition='right' icon='edit' primary onClick={() => createComment()} />
         </Form>
 

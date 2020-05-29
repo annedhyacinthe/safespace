@@ -69,9 +69,9 @@ function Communities () {
       {visited && <Redirect to={`/news/visiter/${community}`} />}
       {joined && <Redirect to={`/news/member/${community}`} />}
       <div style={{ textAlign: 'center' }}>
-        <div>
+        <div style={{marginLeft:'20vw',marginRight:'20vw'}}>
           {response.map((res, index) => (
-            <Card style={{ width: '50%', marginBottom: '35px' }} key={index}>
+            <Card style={{ marginBottom:'35px' }} key={index}>
               <Card.Body>
                 <Card.Title>{res.name}</Card.Title>
                 <Card.Text>{res.description}</Card.Text>
