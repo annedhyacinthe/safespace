@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card, Spinner, Button } from "react-bootstrap";
+import { Card, Spinner, Button, Jumbotron } from "react-bootstrap";
 import { UserContext } from "../contexts/userContext";
 import { Redirect } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
-/**  */
+/** Wraps list of communities */
 function Communities() {
   const [response, setResponse] = useState([]);
   const [community, setCommunity] = useState();
@@ -17,26 +18,26 @@ function Communities() {
         return [];
       })
       .then((json) => checkCommunities(user.id, json))
-      .then((json) => setResponse(json))
-  }, [setResponse])
+      .then((json) => setResponse(json));
+  }, [setResponse]);
 
   const checkCommunities = async (id, json) => {
-    const req = await fetch(`/communitiesByUser/${id}`)
-    const res = await req.json()
-    console.log(res)
-    console.log(json)
+    const req = await fetch(`/communitiesByUser/${id}`);
+    const res = await req.json();
+    console.log(res);
+    console.log(json);
     for (let i = 0; i < res.length; i++) {
       for (let t = 0; t < json.length; t++) {
         if (res[i].id === json[t].id) {
-          json.splice(t, 1)
+          json.splice(t, 1);
         }
       }
     }
-    return json
-  }
+    return json;
+  };
 
-  async function join (userId, communityId) {
-    setCommunity(communityId)
+  async function join(userId, communityId) {
+    setCommunity(communityId);
     const newPostInit = {
       method: "POST",
       headers: {
@@ -70,13 +71,18 @@ function Communities() {
     >
       {visited && <Redirect to={`/news/visiter/${community}`} />}
       {joined && <Redirect to={`/news/member/${community}`} />}
-      <div style={{ textAlign: 'center' }}>
-        <div style={{marginLeft:'20vw',marginRight:'20vw'}}>
+      <div style={{ textAlign: "center" }}>
+        <h1 style={{ marginBottom: "20px" }}>Safe Spaces To Join!</h1>
+        <LinkContainer style={{ marginBottom: "20px" }} to="create-community">
+          <Button>Create a Community</Button>
+        </LinkContainer>
+
+        <div style={{ marginLeft: "20vw", marginRight: "20vw" }}>
           {response.map((res, index) => (
-            <Card style={{ marginBottom:'35px' }} key={index}>
+            <Card style={{ marginBottom: "35px" }} key={index}>
               <Card.Body>
-                <Card.Title>{res.name}</Card.Title>
-                <Card.Text>{res.description}</Card.Text>
+                <Card.Title>{res.display_name}</Card.Title>
+                <Card.Text>{res.headline}</Card.Text>
               </Card.Body>
               <div
                 style={{

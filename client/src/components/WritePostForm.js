@@ -134,10 +134,15 @@ function WritePostForm (props) {
   const postId = props.postId
   useEffect(() => {
     const isAnUpdate = () => {
+<<<<<<< HEAD
       console.log(props.update)
       console.log(props.title, props.body)
       setUpdate(props.update)
       console.log(update)
+=======
+      setUpdate(props.update);
+
+>>>>>>> bc05bbd4dcf3b77efe752e4aa6819d5c1cc6b5ba
       if (update) {
         setTitle(props.title)
         setBody(props.body)

@@ -4,7 +4,7 @@ import { Jumbotron, Tabs, Tab } from "react-bootstrap";
 import Post from "./NewPost";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
-import { Item, Card } from "semantic-ui-react";
+import { Item, Card, Message, Feed } from "semantic-ui-react";
 
 const Community = () => {
   const [posts, setPosts] = useState([]);
@@ -15,7 +15,7 @@ const Community = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      console.log('community')
+      console.log("community");
       if (type === "member") {
         const req = await fetch(`/posts-community/${id}`);
         const response = await req.json();
@@ -50,6 +50,12 @@ const Community = () => {
   return (
     <div>
       <Jumbotron>
+        <Feed.Event>
+          <Feed.Label
+            style={{ width: "50px" }}
+            image={`https://avatars.dicebear.com/api/${community.sprite}/${community.seed}.svg`}
+          />
+        </Feed.Event>
         <h1>{community.display_name}</h1>
         <p>{community.headline}</p>
       </Jumbotron>
@@ -62,24 +68,37 @@ const Community = () => {
           <br />
           <div style={{ width: "65%", margin: "0 auto" }}>
             <Card.Group>
-            {type === 'member' && <NewPostModal  id={id} />}
-            {type === 'member' && <Navbar comm={id} />}
+              <NewPostModal setNewPost={setNewPost} id={id} />
               {Array.isArray(posts) &&
                 posts.map((res, i) => <Post key={i} data={res} />)}
             </Card.Group>
           </div>
         </Tab>
         <Tab eventKey="about" title="About">
-          <h1>About Us</h1>
-          <h3>{community.description}</h3>
+          <Message style={{ marginTop: "20px" }}>
+            <Message.Header>About Us</Message.Header>
+            <p>{community.description}</p>
+          </Message>
         </Tab>
         <Tab eventKey="admins" title="Admins">
-          <h1>List of admins here</h1>
-          <ul>
-            {moderators.map((moderator, i) => (
-              <li key={i}>{moderator.username}</li>
-            ))}
-          </ul>
+          <Message style={{ marginTop: "20px" }}>
+            <Message.Header>Adminstrators of this group:</Message.Header>
+            <Message.List>
+              {moderators.map((moderator, i) => (
+                <Message.Item key={i}>
+                  <Feed.Event>
+                    <Feed.Label
+                      style={{ width: "50px" }}
+                      image={`https://avatars.dicebear.com/api/${moderator.sprite}/${moderator.seed}.svg`}
+                    />
+                    <Feed.Content>
+                      <Feed.Summary content={moderator.username} />
+                    </Feed.Content>
+                  </Feed.Event>
+                </Message.Item>
+              ))}
+            </Message.List>
+          </Message>
         </Tab>
       </Tabs>
     </div>

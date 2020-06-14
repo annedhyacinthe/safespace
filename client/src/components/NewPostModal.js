@@ -10,7 +10,6 @@ function NewPostModal(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const contextRef = createRef();
-  console.log(props)
   return (
     <div>
       <Navbar fixed="bottom">
@@ -18,14 +17,18 @@ function NewPostModal(props) {
           label="Write Post"
           labelPosition="left"
           size="massive"
-          color="green"
-          style={{ color: colorPallet.marvel }}
+          color="black"
+          style={{ backgroundColor: colorPallet.marvel }}
           circular
           icon="edit"
           onClick={handleShow}
         />
 
-        <Modal show={show} onHide={<Redirect to={`/news/member/${props.id}`} />} animation={false}>
+        <Modal
+          show={show}
+          onHide={<Redirect to={`/news/member/${props.id}`} />}
+          animation={false}
+        >
           <Modal.Header closeButton>New Post</Modal.Header>
           <Modal.Body>
             <WritePostForm
@@ -36,7 +39,6 @@ function NewPostModal(props) {
             />
           </Modal.Body>
         </Modal>
-       
       </Navbar>
     </div>
   );
