@@ -1,7 +1,7 @@
-const express = require('express')
-const postRouter = express.Router()
-const postController = require('../controllers/postController')
-const auth = require('../middleware/authenticate')
+const express = require("express");
+const postRouter = express.Router();
+const postController = require("../controllers/postController");
+const auth = require("../middleware/authenticate");
 
 // API post controller paths
 postRouter.post('/posts', auth, postController.create)
