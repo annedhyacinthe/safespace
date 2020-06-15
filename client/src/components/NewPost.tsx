@@ -11,7 +11,7 @@ import {
   Item,
   Dropdown,
   Icon,
-  Label
+  Label,
 } from "semantic-ui-react";
 import ReadMoreReact from "read-more-react";
 import { LinkContainer } from "react-router-bootstrap";
@@ -19,7 +19,25 @@ import { Nav } from "react-bootstrap";
 import CommentList from "./CommentList";
 import Update from "./Update";
 
-const Post = ({ data }) => {
+interface PropConfig {
+  data: DataConfig;
+}
+interface DataConfig {
+  community_id: number;
+  content: string;
+  created_at: string;
+  id: number;
+  likes: number;
+  title: string;
+  user_id: number;
+}
+
+interface Provider {
+  user_id: any;
+}
+
+const Post = (props: PropConfig) => {
+  const { data } = props;
   // data: community_id, content, created_at, id, likes, title, user_id
   const location = useLocation();
   const { title } = data;
@@ -28,9 +46,9 @@ const Post = ({ data }) => {
   const postAuthorId = data.user_id;
   const communityId = data.community_id;
 
-  const { user } = useContext(UserContext);
+  const { user }: any = useContext(UserContext);
   const [newPost, setNewPost] = useState(false);
-  const [likes, setLikes] = useState([]); // number of likes
+  const [likes, setLikes] = useState<Provider[]>([]); // number of likes
   const [comments, setComments] = useState(null);
   const [isCommentsShowing, setIsCommentsShowing] = useState(false);
   const [isLiked, setIsLiked] = useState(false); // current user clicked 'like'
@@ -97,7 +115,7 @@ const Post = ({ data }) => {
     }
   };
 
-  const deletePost = async (postId) =>
+  const deletePost = async (postId: number) =>
     fetch(`/posts/${postId}`, { method: "DELETE" });
 
   const [userComment, setUserComment] = useState("");
@@ -114,7 +132,7 @@ const Post = ({ data }) => {
     setIsChanged((p) => !p);
   };
 
-  const handleCommentChange = (e) => {
+  const handleCommentChange = (e: any) => {
     const currentComment = e.target.value;
     setUserComment(currentComment);
   };
@@ -126,8 +144,7 @@ const Post = ({ data }) => {
   };
   const avatar = `https://avatars.dicebear.com/api/${sprite}/${seed}.svg`;
 
-  const [userResponse, setUserResponse] = useState(null);
-
+  const [userResponse, setUserResponse] = useState<any>();
   const getUser = async () => {
     const req = await fetch(`/user/${data.user_id}`);
     const userResponse = await req.json();
@@ -190,25 +207,29 @@ const Post = ({ data }) => {
         style={{ display: "flex", justifyContents: "space-between" }}
       >
         <Card.Description style={{ marginRight: "4px" }}>
-           <Button as='div' labelPosition='left'>
-              <Label as='a' basic pointing='right'>
-                {likes.length}
-              </Label>
-              <Button style={isLiked ? {color:"#1FB6FF"} : {color:"white"}} onClick={() => likePost()} color="black" icon>
-                <Icon name='heart' />
-                {isLiked ? "Liked" : "Like"}
-              </Button>
+          <Button as="div" labelPosition="left">
+            <Label as="a" basic pointing="right">
+              {likes.length}
+            </Label>
+            <Button
+              style={isLiked ? { color: "#1FB6FF" } : { color: "white" }}
+              onClick={() => likePost()}
+              color="black"
+              icon
+            >
+              <Icon name="heart" />
+              {isLiked ? "Liked" : "Like"}
             </Button>
-
+          </Button>
         </Card.Description>
-        <Card.Description>
-
-        </Card.Description>
+        <Card.Description></Card.Description>
         <Card.Description onClick={() => getComments()}>
           <Button color="black" animated>
-            <Button.Content style={{color:'white'}} visible>Comments</Button.Content>
+            <Button.Content style={{ color: "white" }} visible>
+              Comments
+            </Button.Content>
             <Button.Content hidden>
-              <Icon name='arrow right' />
+              <Icon name="arrow right" />
             </Button.Content>
           </Button>
         </Card.Description>

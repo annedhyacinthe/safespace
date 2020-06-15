@@ -5,7 +5,7 @@ import { colorPallet } from "./Theme";
 import WritePostForm from "./WritePostForm";
 import { Navbar } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-function NewPostModal(props) {
+function NewPostModal(props: any) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -26,7 +26,7 @@ function NewPostModal(props) {
 
         <Modal
           show={show}
-          onHide={<Redirect to={`/news/member/${props.id}`} />}
+          onHide={() => <Redirect to={`/news/member/${props.id}`} />}
           animation={false}
         >
           <Modal.Header closeButton>New Post</Modal.Header>
