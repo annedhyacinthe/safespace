@@ -172,13 +172,13 @@ function Post(props: any) {
           {dateCreated.getHours() >= 12 ? "PM" : "AM"}
         </Item.Meta>
         <Item.Description>
-          <ReadMoreReact
+          {/* <ReadMoreReact
             text={props.data.content}
             min={200}
             max={500}
             ideal={300}
             readMoreText="...See More"
-          />
+          /> */}
         </Item.Description>
 
         {props.type === "member" && (

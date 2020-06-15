@@ -13,7 +13,7 @@ import {
   Icon,
   Label,
 } from "semantic-ui-react";
-import ReadMoreReact from "read-more-react";
+import * as ReadMoreReact from "read-more-react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 import CommentList from "./CommentList";
@@ -192,13 +192,13 @@ const Post = (props: PropConfig) => {
         </Card.Meta>
         <Card.Meta>{dateCreated.toLocaleString()}</Card.Meta>
         <Card.Description>
-          <ReadMoreReact
+          {/* <ReadMoreReact
             text={data.content}
             min={200}
             max={500}
             ideal={350}
             readMoreText="Read More"
-          />
+          /> */}
         </Card.Description>
       </Card.Content>
 
