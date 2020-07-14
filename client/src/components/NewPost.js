@@ -11,7 +11,7 @@ import {
   Item,
   Dropdown,
   Icon,
-  Label
+  Label,
 } from "semantic-ui-react";
 import ReadMoreReact from "read-more-react";
 import { LinkContainer } from "react-router-bootstrap";
@@ -42,12 +42,17 @@ const Post = ({ data }) => {
       const req = await fetch(`/likes/${postId}`);
       const postLikes = await req.json();
       setLikes(postLikes);
-      for (let i = 0; i < likes.length; i++) {
-        if (likes[i].user_id === postAuthorId) return setIsLiked(true);
+      console.log(postLikes);
+      console.log(user);
+      if (postLikes.length > 0 && user != null) {
+        for (let i = 0; i < postLikes.length; i++) {
+          // console.log("hi");
+          if (postLikes[i].user_id === user.id) return setIsLiked(true);
+        }
       }
     };
     getLikes();
-  }, [isLiked]);
+  }, [isLiked, user]);
 
   const [author, setAuthor] = useState(null); // all author's info
 
@@ -77,13 +82,15 @@ const Post = ({ data }) => {
     };
 
     if (isLiked) {
-      const req = await fetch(`/unlike/${postId}/${postAuthorId}`, likeInit);
+      const req = await fetch(`/unlike/${postId}/${user.id}`, likeInit);
       const newLikes = await req.json();
+      console.log(newLikes);
       setLikes(newLikes);
       setIsLiked(false);
     } else {
-      const req = await fetch(`/like/${postId}/${postAuthorId}`, likeInit);
+      const req = await fetch(`/like/${postId}/${user.id}`, likeInit);
       const newLikes = await req.json();
+      console.log(newLikes);
       setLikes(newLikes);
       setIsLiked(true);
     }
@@ -190,25 +197,29 @@ const Post = ({ data }) => {
         style={{ display: "flex", justifyContents: "space-between" }}
       >
         <Card.Description style={{ marginRight: "4px" }}>
-           <Button as='div' labelPosition='left'>
-              <Label as='a' basic pointing='right'>
-                {likes.length}
-              </Label>
-              <Button style={isLiked ? {color:"#1FB6FF"} : {color:"white"}} onClick={() => likePost()} color="black" icon>
-                <Icon name='heart' />
-                {isLiked ? "Liked" : "Like"}
-              </Button>
+          <Button as="div" labelPosition="left">
+            <Label as="a" basic pointing="right">
+              {likes.length}
+            </Label>
+            <Button
+              style={isLiked ? { color: "#1FB6FF" } : { color: "white" }}
+              onClick={() => likePost()}
+              color="black"
+              icon
+            >
+              <Icon name="heart" />
+              {isLiked ? "Liked" : "Like"}
             </Button>
-
+          </Button>
         </Card.Description>
-        <Card.Description>
-
-        </Card.Description>
+        <Card.Description></Card.Description>
         <Card.Description onClick={() => getComments()}>
           <Button color="black" animated>
-            <Button.Content style={{color:'white'}} visible>Comments</Button.Content>
+            <Button.Content style={{ color: "white" }} visible>
+              Comments
+            </Button.Content>
             <Button.Content hidden>
-              <Icon name='arrow right' />
+              <Icon name="arrow right" />
             </Button.Content>
           </Button>
         </Card.Description>
