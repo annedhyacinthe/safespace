@@ -4,13 +4,12 @@ import { Button } from "semantic-ui-react";
 import { colorPallet } from "./Theme";
 import WritePostForm from "./WritePostForm";
 import { Navbar } from "react-bootstrap";
-
-function NewPostModal(props) {
+import { Redirect } from "react-router-dom";
+function NewPostModal(props: any) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const contextRef = createRef();
-
   return (
     <div>
       <Navbar fixed="bottom">
@@ -25,12 +24,17 @@ function NewPostModal(props) {
           onClick={handleShow}
         />
 
-        <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal
+          show={show}
+          onHide={() => <Redirect to={`/news/member/${props.id}`} />}
+          animation={false}
+        >
           <Modal.Header closeButton>New Post</Modal.Header>
           <Modal.Body>
             <WritePostForm
               setShow={setShow}
-              setNewPost={props.setNewPost}
+              show={show}
+              setChange={props.setChange}
               id={props.id}
             />
           </Modal.Body>

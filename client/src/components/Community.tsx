@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import NewPostModal from "./NewPostModal";
 import { Jumbotron, Tabs, Tab } from "react-bootstrap";
 import Post from "./NewPost";
+import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import { Item, Card, Message, Feed } from "semantic-ui-react";
 
 const Community = () => {
-  const [posts, setPosts] = useState([]);
-  const [community, setCommunity] = useState({});
+  const [posts, setPosts] = useState<any>();
+  const [community, setCommunity] = useState({
+    sprite: "",
+    seed: "",
+    description: "",
+    headline: "",
+    display_name: "",
+  });
   const [moderators, setModerators] = useState([]);
   const [newPost, setNewPost] = useState(false);
   const { type, id } = useParams();
 
   useEffect(() => {
     const getPosts = async () => {
+      console.log("community");
       if (type === "member") {
         const req = await fetch(`/posts-community/${id}`);
         const response = await req.json();
@@ -49,7 +57,10 @@ const Community = () => {
     <div>
       <Jumbotron>
         <Feed.Event>
-          <Feed.Label style={{width:"50px"}} image={`https://avatars.dicebear.com/api/${community.sprite}/${community.seed}.svg`} />
+          <Feed.Label
+            style={{ width: "50px" }}
+            image={`https://avatars.dicebear.com/api/${community.sprite}/${community.seed}.svg`}
+          />
         </Feed.Event>
         <h1>{community.display_name}</h1>
         <p>{community.headline}</p>
@@ -70,31 +81,39 @@ const Community = () => {
           </div>
         </Tab>
         <Tab eventKey="about" title="About">
-          <Message style={{marginTop:"20px"}}>
+          <Message style={{ marginTop: "20px" }}>
             <Message.Header>About Us</Message.Header>
             <p>{community.description}</p>
           </Message>
         </Tab>
         <Tab eventKey="admins" title="Admins">
-            <Message style={{marginTop:"20px"}}>
-              <Message.Header>Adminstrators of this group:</Message.Header>
-                <Message.List>
-                  {moderators.map((moderator, i) => (
-                    <Message.Item key={i}>
-                      <Feed.Event>
-                        <Feed.Label style={{width:"50px"}} image={`https://avatars.dicebear.com/api/${moderator.sprite}/${moderator.seed}.svg`} />
-                        <Feed.Content>
-                          <Feed.Summary
-                            content={moderator.username}
-                          />
-                        </Feed.Content>
-                      </Feed.Event>
-
-                    </Message.Item>
-                  ))}
-                </Message.List>
-            </Message>
-
+          <Message style={{ marginTop: "20px" }}>
+            <Message.Header>Adminstrators of this group:</Message.Header>
+            <Message.List>
+              {moderators.map(
+                (
+                  moderator: {
+                    sprite: any;
+                    seed: any;
+                    username: React.ReactNode;
+                  },
+                  i: string | number | undefined
+                ) => (
+                  <Message.Item key={i}>
+                    <Feed.Event>
+                      <Feed.Label
+                        style={{ width: "50px" }}
+                        image={`https://avatars.dicebear.com/api/${moderator.sprite}/${moderator.seed}.svg`}
+                      />
+                      <Feed.Content>
+                        <Feed.Summary content={moderator.username} />
+                      </Feed.Content>
+                    </Feed.Event>
+                  </Message.Item>
+                )
+              )}
+            </Message.List>
+          </Message>
         </Tab>
       </Tabs>
     </div>

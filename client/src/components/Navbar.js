@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { colorPallet } from "./Theme";
 
 const NavBar = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, joined } = useContext(UserContext);
   const [communities, setCommunities] = useState(null);
   const [loggedOut, setLoggedOut] = useState(false);
 
@@ -21,7 +21,7 @@ const NavBar = () => {
     getCommunities().then((list) => {
       setCommunities(list);
     });
-  }, [user, setCommunities]);
+  }, [user, joined]);
 
   useEffect(() => {
     if (loggedOut) {

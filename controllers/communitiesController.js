@@ -42,7 +42,7 @@ const createCommunity = async (req, res) => {
     sprite,
     seed,
   } = req.body;
-  console.log(communityName, displayName, headline, description, sprite, seed);
+
   try {
     const addedCommunity = await Communities.create(
       userId,
@@ -53,7 +53,7 @@ const createCommunity = async (req, res) => {
       sprite,
       seed
     );
-    console.log(addedCommunity);
+
     res.status(200).json(addedCommunity);
   } catch (e) {
     res.status(500).json({ error: e });

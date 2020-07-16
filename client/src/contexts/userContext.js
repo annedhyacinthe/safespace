@@ -4,7 +4,7 @@ export const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
+  const [joined, setJoined] = useState(false);
   useEffect(() => {
     document.cookie
       ? fetch("/user")
@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
       : setUser(null);
   }, [setUser]);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, joined, setJoined }}>
       {children}
     </UserContext.Provider>
   );

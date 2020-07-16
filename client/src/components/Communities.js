@@ -8,9 +8,9 @@ import { LinkContainer } from "react-router-bootstrap";
 function Communities() {
   const [response, setResponse] = useState([]);
   const [community, setCommunity] = useState();
-  const [joined, setJoined] = useState(false);
+  // const [joined, setJoined] = useState(false);
   const [visited, setVisit] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, joined, setJoined } = useContext(UserContext);
   useEffect(() => {
     fetch("/communities")
       .then((res) => {
@@ -70,13 +70,12 @@ function Communities() {
       {visited && <Redirect to={`/news/visiter/${community}`} />}
       {joined && <Redirect to={`/news/member/${community}`} />}
       <div style={{ textAlign: "center" }}>
-
-        <h1 style={{marginBottom:"20px"}} >Safe Spaces To Join!</h1>
-        <LinkContainer style={{marginBottom:"20px"}} to='create-community'>
+        <h1 style={{ marginBottom: "20px" }}>Safe Spaces To Join!</h1>
+        <LinkContainer style={{ marginBottom: "20px" }} to="create-community">
           <Button>Create a Community</Button>
         </LinkContainer>
 
-        <div style={{marginLeft:'20vw',marginRight:'20vw'}}>
+        <div style={{ marginLeft: "20vw", marginRight: "20vw" }}>
           {response.map((res, index) => (
             <Card style={{ marginBottom: "35px" }} key={index}>
               <Card.Body>

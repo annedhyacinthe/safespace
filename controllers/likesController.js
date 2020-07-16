@@ -3,7 +3,6 @@ const Likes = require("../models/Likes");
 const AllLikesForPost = async (req, res) => {
   const { id } = req.params;
   const data = await Likes.amountOfLike(id);
-  console.log("data", data);
   return res.status(200).json(data);
 };
 const AddALike = async (req, res) => {

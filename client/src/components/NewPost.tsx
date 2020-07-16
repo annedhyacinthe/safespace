@@ -13,14 +13,31 @@ import {
   Icon,
   Label,
 } from "semantic-ui-react";
-import ReadMoreReact from "read-more-react";
+// import * as ReadMoreReact from "read-more-react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 import CommentList from "./CommentList";
 import Update from "./Update";
 
-const Post = ({ data }) => {
-  // data: community_id, content, created_at, id, likes, title, user_id
+interface PropConfig {
+  data: DataConfig;
+}
+interface DataConfig {
+  community_id: number;
+  content: string;
+  created_at: string;
+  id: number;
+  likes: number;
+  title: string;
+  user_id: number;
+}
+
+interface Provider {
+  user_id: number;
+}
+
+const Post = (props: PropConfig) => {
+  const { data } = props;
   const location = useLocation();
   const { title } = data;
   const dateCreated = new Date(data.created_at);
@@ -28,33 +45,41 @@ const Post = ({ data }) => {
   const postAuthorId = data.user_id;
   const communityId = data.community_id;
 
-  const { user } = useContext(UserContext);
+  const { user }: any = useContext(UserContext);
   const [newPost, setNewPost] = useState(false);
-  const [likes, setLikes] = useState([]); // number of likes
+  const [likes, setLikes] = useState<Provider[]>([]);
   const [comments, setComments] = useState(null);
   const [isCommentsShowing, setIsCommentsShowing] = useState(false);
-  const [isLiked, setIsLiked] = useState(false); // current user clicked 'like'
+  const [isLiked, setIsLiked] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
   const [show, setShow] = useState(false);
+  const [author, setAuthor] = useState(null);
 
   useEffect(() => {
     const getLikes = async () => {
       const req = await fetch(`/likes/${postId}`);
       const postLikes = await req.json();
       setLikes(postLikes);
-      console.log(postLikes);
-      console.log(user);
+      for (let i = 0; i < likes.length; i++) {
+        if (likes[i].user_id === postAuthorId) return setIsLiked(true);
+      }
+    };
+    getLikes();
+  }, [isLiked]);
+
+  useEffect(() => {
+    const getLikes = async () => {
+      const req = await fetch(`/likes/${postId}`);
+      const postLikes = await req.json();
+      setLikes(postLikes);
       if (postLikes.length > 0 && user != null) {
         for (let i = 0; i < postLikes.length; i++) {
-          // console.log("hi");
           if (postLikes[i].user_id === user.id) return setIsLiked(true);
         }
       }
     };
     getLikes();
-  }, [isLiked, user]);
-
-  const [author, setAuthor] = useState(null); // all author's info
+  }, [isLiked, user]); //user is also a parameter because the userContext can load after this useEffect
 
   useEffect(() => {
     const getAuthor = async () => {
@@ -84,13 +109,11 @@ const Post = ({ data }) => {
     if (isLiked) {
       const req = await fetch(`/unlike/${postId}/${user.id}`, likeInit);
       const newLikes = await req.json();
-      console.log(newLikes);
       setLikes(newLikes);
       setIsLiked(false);
     } else {
       const req = await fetch(`/like/${postId}/${user.id}`, likeInit);
       const newLikes = await req.json();
-      console.log(newLikes);
       setLikes(newLikes);
       setIsLiked(true);
     }
@@ -104,7 +127,7 @@ const Post = ({ data }) => {
     }
   };
 
-  const deletePost = async (postId) =>
+  const deletePost = async (postId: number) =>
     fetch(`/posts/${postId}`, { method: "DELETE" });
 
   const [userComment, setUserComment] = useState("");
@@ -121,7 +144,7 @@ const Post = ({ data }) => {
     setIsChanged((p) => !p);
   };
 
-  const handleCommentChange = (e) => {
+  const handleCommentChange = (e: any) => {
     const currentComment = e.target.value;
     setUserComment(currentComment);
   };
@@ -133,8 +156,7 @@ const Post = ({ data }) => {
   };
   const avatar = `https://avatars.dicebear.com/api/${sprite}/${seed}.svg`;
 
-  const [userResponse, setUserResponse] = useState(null);
-
+  const [userResponse, setUserResponse] = useState<any>();
   const getUser = async () => {
     const req = await fetch(`/user/${data.user_id}`);
     const userResponse = await req.json();
@@ -182,13 +204,13 @@ const Post = ({ data }) => {
         </Card.Meta>
         <Card.Meta>{dateCreated.toLocaleString()}</Card.Meta>
         <Card.Description>
-          <ReadMoreReact
+          {/* <ReadMoreReact
             text={data.content}
             min={200}
             max={500}
             ideal={350}
             readMoreText="Read More"
-          />
+          /> */}
         </Card.Description>
       </Card.Content>
 
