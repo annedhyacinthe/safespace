@@ -6,3 +6,6 @@ Output: `Created Migration: /home/enmanuel/safespace/src/db/migrations/202005191
 Directory for migrations specified in `knexfile.js`
 
 Seeds are run in alphabetical order with `npx knex seed:run` and are created with `npx knex seed:make <name>`
+
+`npx knex migrate:rollback`
+`npx knex migrate:latest`
