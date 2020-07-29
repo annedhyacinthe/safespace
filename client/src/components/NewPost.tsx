@@ -60,18 +60,6 @@ const Post = (props: PropConfig) => {
       const req = await fetch(`/likes/${postId}`);
       const postLikes = await req.json();
       setLikes(postLikes);
-      for (let i = 0; i < likes.length; i++) {
-        if (likes[i].user_id === postAuthorId) return setIsLiked(true);
-      }
-    };
-    getLikes();
-  }, [isLiked]);
-
-  useEffect(() => {
-    const getLikes = async () => {
-      const req = await fetch(`/likes/${postId}`);
-      const postLikes = await req.json();
-      setLikes(postLikes);
       if (postLikes.length > 0 && user != null) {
         for (let i = 0; i < postLikes.length; i++) {
           if (postLikes[i].user_id === user.id) return setIsLiked(true);
@@ -85,6 +73,7 @@ const Post = (props: PropConfig) => {
     const getAuthor = async () => {
       const req = await fetch(`/user/${postAuthorId}`);
       const newAuthor = await req.json();
+
       setAuthor(newAuthor);
     };
     getAuthor();

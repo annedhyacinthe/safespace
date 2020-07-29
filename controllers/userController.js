@@ -37,6 +37,7 @@ const register = async (req, res) => {
     const saltRounds = 7;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     User.add(username, email, hashedPassword, sprite, seed);
+
     const token = jwt.sign({ username: username }, process.env.AUTH_KEY);
     res.cookie("safeToken", token).sendStatus(200);
   } catch (err) {
